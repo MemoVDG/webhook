@@ -12,10 +12,14 @@ app = Flask(__name__)
 app.secret_key = "SECRET_KEY"
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return "Success", 200, {"Access-Control-Allow-Origin": "*"}
+
+
 # TODO: Validate sign to avoid requests from any source
 @app.route('/webhook', methods=['POST', ])
 def webhook():
-    print('o')
     if request.method == 'POST':
         data = request.get_json()
         email_manager = EmailManager(
@@ -39,7 +43,6 @@ def webhook():
         else:
             abort(400)
     else:
-        print('ol')
         abort(400)
 
 
